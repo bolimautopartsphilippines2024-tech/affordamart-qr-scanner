@@ -1,765 +1,1904 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AffordaMart QR Scanner</title>
+<meta charset="UTF-8">
 
-  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>
+  AFFORDAMART ATTENDANCE KIOSK
+</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #ffffff;
-      color: #222;
-      text-align: center;
-    }
 
-    .header {
-      background: #D71920;
-      color: #ffffff;
-      padding: 18px 15px 14px;
-      border-bottom: 7px solid #FFD400;
-    }
+<!-- HTML5 QR CODE -->
 
-    .logo-text {
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
+<script
+  src="https://unpkg.com/html5-qrcode"
+  type="text/javascript">
+</script>
 
-    .subtitle {
-      font-size: 14px;
-      font-weight: bold;
-      margin-top: 4px;
-    }
 
-    .container {
-      max-width: 650px;
-      margin: auto;
-      padding: 18px 15px 30px;
-    }
+<style>
 
-    .scanner-title {
-      font-size: 24px;
-      font-weight: 800;
-      color: #D71920;
-      margin: 8px 0 15px;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    #reader {
-      width: 100%;
-      max-width: 520px;
-      margin: auto;
-      border: 5px solid #D71920;
-      border-radius: 18px;
-      overflow: hidden;
-      background: #000;
-    }
 
-    .status {
-      margin: 18px auto 10px;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      background: #fff7cc;
-      border: 2px solid #FFD400;
-    }
+html,
+body {
 
-    .success {
-      background: #e9f9e9;
-      border-color: #28a745;
-      color: #176b2c;
-    }
+  margin: 0;
 
-    .error {
-      background: #ffeaea;
-      border-color: #D71920;
-      color: #a40000;
-    }
+  padding: 0;
 
-    .loading {
-      background: #fff7cc;
-      border-color: #FFD400;
-      color: #7a6200;
-    }
+  width: 100%;
 
-    .employee-card {
-      display: none;
-      margin: 15px auto;
-      padding: 20px;
-      border-radius: 15px;
-      background: #ffffff;
-      border: 3px solid #D71920;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    }
+  height: 100%;
 
-    .employee-name {
-      font-size: 26px;
-      font-weight: 900;
-      color: #D71920;
-      margin-bottom: 8px;
-    }
+  overflow: hidden;
 
-    .employee-id {
-      font-size: 17px;
-      font-weight: bold;
-      color: #555;
-      margin-bottom: 12px;
-    }
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-    .action {
-      display: inline-block;
-      padding: 10px 22px;
-      border-radius: 25px;
-      background: #FFD400;
-      color: #222;
-      font-size: 22px;
-      font-weight: 900;
-    }
+  background:
+    #ffffff;
 
-    .time {
-      margin-top: 10px;
-      font-size: 16px;
-      color: #555;
-    }
+}
 
-    .footer {
-      margin-top: 20px;
-      font-size: 12px;
-      color: #777;
-    }
 
-    button {
-      border: none;
-      background: #D71920;
-      color: white;
-      padding: 12px 22px;
-      border-radius: 25px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 12px;
-    }
+/******************************************************
+ * MAIN
+ ******************************************************/
 
-    button:hover {
-      background: #b9141a;
-    }
-  </style>
+body {
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+
+/******************************************************
+ * HEADER
+ ******************************************************/
+
+.header {
+
+  height: 90px;
+
+  background:
+    #D71920;
+
+  color:
+    #ffffff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding:
+    0 30px;
+
+  box-shadow:
+    0 3px 10px
+    rgba(0,0,0,0.20);
+
+  position: relative;
+
+  z-index: 10;
+
+}
+
+
+.brand {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+}
+
+
+.brand-logo {
+
+  width: 58px;
+
+  height: 58px;
+
+  object-fit: contain;
+
+  background:
+    #ffffff;
+
+  border-radius:
+    10px;
+
+  padding:
+    5px;
+
+}
+
+
+.brand-text {
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+
+.brand-name {
+
+  font-size:
+    30px;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    1px;
+
+}
+
+
+.brand-subtitle {
+
+  font-size:
+    13px;
+
+  font-weight:
+    bold;
+
+  color:
+    #FFD400;
+
+  letter-spacing:
+    1px;
+
+}
+
+
+.kiosk-label {
+
+  background:
+    #FFD400;
+
+  color:
+    #D71920;
+
+  padding:
+    12px 22px;
+
+  border-radius:
+    30px;
+
+  font-size:
+    16px;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    1px;
+
+}
+
+
+/******************************************************
+ * CONTENT
+ ******************************************************/
+
+.main {
+
+  flex: 1;
+
+  display: grid;
+
+  grid-template-columns:
+    38%
+    62%;
+
+  min-height:
+    0;
+
+}
+
+
+/******************************************************
+ * CAMERA SIDE
+ ******************************************************/
+
+.camera-panel {
+
+  background:
+    #111111;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding:
+    20px;
+
+  position: relative;
+
+}
+
+
+.camera-title {
+
+  color:
+    #FFD400;
+
+  font-size:
+    21px;
+
+  font-weight:
+    900;
+
+  margin-bottom:
+    15px;
+
+  text-align:
+    center;
+
+}
+
+
+#reader {
+
+  width:
+    100%;
+
+  max-width:
+    480px;
+
+  border:
+    5px solid
+    #FFD400;
+
+  border-radius:
+    20px;
+
+  overflow:
+    hidden;
+
+  background:
+    #000000;
+
+}
+
+
+.camera-status {
+
+  margin-top:
+    15px;
+
+  color:
+    #ffffff;
+
+  font-size:
+    14px;
+
+  text-align:
+    center;
+
+  opacity:
+    0.85;
+
+}
+
+
+/******************************************************
+ * DISPLAY SIDE
+ ******************************************************/
+
+.display-panel {
+
+  background:
+    #ffffff;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding:
+    25px 35px;
+
+  position: relative;
+
+  overflow:
+    hidden;
+
+}
+
+
+/******************************************************
+ * WAITING STATE
+ ******************************************************/
+
+.waiting {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align:
+    center;
+
+  width:
+    100%;
+
+}
+
+
+.waiting-icon {
+
+  width:
+    100px;
+
+  height:
+    100px;
+
+  border-radius:
+    50%;
+
+  background:
+    #FFD400;
+
+  color:
+    #D71920;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size:
+    50px;
+
+  margin-bottom:
+    20px;
+
+}
+
+
+.waiting-title {
+
+  font-size:
+    34px;
+
+  font-weight:
+    900;
+
+  color:
+    #D71920;
+
+}
+
+
+.waiting-subtitle {
+
+  font-size:
+    18px;
+
+  color:
+    #666666;
+
+  margin-top:
+    8px;
+
+}
+
+
+/******************************************************
+ * EMPLOYEE CARD
+ ******************************************************/
+
+.employee-card {
+
+  display:
+    none;
+
+  width:
+    100%;
+
+  max-width:
+    850px;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  text-align:
+    center;
+
+}
+
+
+.employee-photo-wrapper {
+
+  width:
+    210px;
+
+  height:
+    210px;
+
+  border-radius:
+    50%;
+
+  border:
+    8px solid
+    #FFD400;
+
+  overflow:
+    hidden;
+
+  background:
+    #f1f1f1;
+
+  box-shadow:
+    0 6px 20px
+    rgba(0,0,0,0.20);
+
+  margin-bottom:
+    18px;
+
+}
+
+
+.employee-photo {
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+}
+
+
+.employee-name {
+
+  font-size:
+    clamp(
+      30px,
+      4vw,
+      54px
+    );
+
+  line-height:
+    1.05;
+
+  font-weight:
+    900;
+
+  color:
+    #D71920;
+
+  text-transform:
+    uppercase;
+
+  margin:
+    0;
+
+}
+
+
+.employee-id {
+
+  font-size:
+    20px;
+
+  color:
+    #555555;
+
+  margin-top:
+    10px;
+
+  font-weight:
+    bold;
+
+}
+
+
+/******************************************************
+ * ACTION
+ ******************************************************/
+
+.action {
+
+  margin-top:
+    22px;
+
+  padding:
+    14px 45px;
+
+  border-radius:
+    50px;
+
+  font-size:
+    clamp(
+      28px,
+      4vw,
+      48px
+    );
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    2px;
+
+}
+
+
+.action.time-in {
+
+  background:
+    #FFD400;
+
+  color:
+    #D71920;
+
+}
+
+
+.action.time-out {
+
+  background:
+    #D71920;
+
+  color:
+    #ffffff;
+
+}
+
+
+/******************************************************
+ * DATE TIME
+ ******************************************************/
+
+.date-time {
+
+  margin-top:
+    18px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  gap:
+    5px;
+
+}
+
+
+.date {
+
+  font-size:
+    17px;
+
+  font-weight:
+    bold;
+
+  color:
+    #444444;
+
+}
+
+
+.time {
+
+  font-size:
+    30px;
+
+  font-weight:
+    900;
+
+  color:
+    #111111;
+
+}
+
+
+/******************************************************
+ * STATUS BAR
+ ******************************************************/
+
+.success-message {
+
+  margin-top:
+    15px;
+
+  font-size:
+    15px;
+
+  color:
+    #555555;
+
+}
+
+
+/******************************************************
+ * FOOTER
+ ******************************************************/
+
+.footer {
+
+  height:
+    48px;
+
+  background:
+    #FFD400;
+
+  color:
+    #D71920;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  font-size:
+    14px;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    0.5px;
+
+}
+
+
+/******************************************************
+ * ERROR
+ ******************************************************/
+
+.error-box {
+
+  display:
+    none;
+
+  position:
+    absolute;
+
+  bottom:
+    20px;
+
+  left:
+    50%;
+
+  transform:
+    translateX(-50%);
+
+  background:
+    #D71920;
+
+  color:
+    #ffffff;
+
+  padding:
+    12px 22px;
+
+  border-radius:
+    8px;
+
+  font-weight:
+    bold;
+
+  z-index:
+    100;
+
+}
+
+
+/******************************************************
+ * RESPONSIVE
+ ******************************************************/
+
+@media (
+  max-width: 900px
+) {
+
+  body {
+
+    overflow:
+      auto;
+
+  }
+
+
+  .header {
+
+    height:
+      75px;
+
+    padding:
+      0 15px;
+
+  }
+
+
+  .brand-logo {
+
+    width:
+      45px;
+
+    height:
+      45px;
+
+  }
+
+
+  .brand-name {
+
+    font-size:
+      21px;
+
+  }
+
+
+  .brand-subtitle {
+
+    font-size:
+      9px;
+
+  }
+
+
+  .kiosk-label {
+
+    padding:
+      8px 12px;
+
+    font-size:
+      11px;
+
+  }
+
+
+  .main {
+
+    display:
+      flex;
+
+    flex-direction:
+      column;
+
+    overflow:
+      auto;
+
+  }
+
+
+  .camera-panel {
+
+    min-height:
+      390px;
+
+  }
+
+
+  .display-panel {
+
+    min-height:
+      550px;
+
+    padding:
+      25px 15px;
+
+  }
+
+
+  .employee-photo-wrapper {
+
+    width:
+      160px;
+
+    height:
+      160px;
+
+  }
+
+
+  .employee-name {
+
+    font-size:
+      32px;
+
+  }
+
+
+  .action {
+
+    font-size:
+      30px;
+
+    padding:
+      12px 30px;
+
+  }
+
+}
+
+
+/******************************************************
+ * VERY LARGE SCREEN
+ ******************************************************/
+
+@media (
+  min-width: 1500px
+) {
+
+  .employee-photo-wrapper {
+
+    width:
+      250px;
+
+    height:
+      250px;
+
+  }
+
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-  <div class="header">
-    <div class="logo-text">AFFORDAMART</div>
-    <div class="subtitle">EMPLOYEE ATTENDANCE SYSTEM</div>
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header class="header">
+
+  <div class="brand">
+
+    <img
+      class="brand-logo"
+      src="https://drive.google.com/uc?export=view&id=1STn9nTPtxUdkZzScSoqR0nBxeHXhwsXu"
+      onerror="this.style.display='none'"
+      alt="AffordaMart"
+    >
+
+    <div class="brand-text">
+
+      <div class="brand-name">
+        AFFORDAMART
+      </div>
+
+      <div class="brand-subtitle">
+        AFFORDABLE. QUALITY. EVERYDAY.
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="container">
 
-    <div class="scanner-title">
-      📷 SCAN EMPLOYEE QR
+  <div class="kiosk-label">
+    EMPLOYEE ATTENDANCE
+  </div>
+
+</header>
+
+
+<!-- ==================================================
+     MAIN
+================================================== -->
+
+<main class="main">
+
+
+  <!-- ================================================
+       CAMERA
+  ================================================= -->
+
+  <section class="camera-panel">
+
+    <div class="camera-title">
+      SCAN EMPLOYEE QR CODE
     </div>
+
 
     <div id="reader"></div>
 
-    <div id="status" class="status loading">
+
+    <div
+      class="camera-status"
+      id="cameraStatus"
+    >
       Starting camera...
     </div>
 
-    <div id="employeeCard" class="employee-card">
+  </section>
 
-      <div id="employeeName" class="employee-name">
-        Employee
+
+  <!-- ================================================
+       EMPLOYEE DISPLAY
+  ================================================= -->
+
+  <section class="display-panel">
+
+
+    <!-- WAITING -->
+
+    <div
+      class="waiting"
+      id="waiting"
+    >
+
+      <div class="waiting-icon">
+        QR
       </div>
 
-      <div id="employeeId" class="employee-id">
-        Employee ID
+      <div class="waiting-title">
+        READY TO SCAN
       </div>
 
-      <div id="action" class="action">
-        —
-      </div>
-
-      <div id="time" class="time">
-        —
+      <div class="waiting-subtitle">
+        Please scan your employee QR code
       </div>
 
     </div>
 
-    <button id="restartButton" onclick="restartScanner()" style="display:none;">
-      🔄 SCAN AGAIN
-    </button>
 
-    <div class="footer">
-      AffordaMart Employee QR Attendance System
+    <!-- EMPLOYEE CARD -->
+
+    <div
+      class="employee-card"
+      id="employeeCard"
+    >
+
+
+      <div class="employee-photo-wrapper">
+
+        <img
+          id="employeePhoto"
+          class="employee-photo"
+          alt="Employee Photo"
+        >
+
+      </div>
+
+
+      <h1
+        id="employeeName"
+        class="employee-name"
+      >
+      </h1>
+
+
+      <div
+        id="employeeId"
+        class="employee-id"
+      >
+      </div>
+
+
+      <div
+        id="employeeAction"
+        class="action"
+      >
+      </div>
+
+
+      <div class="date-time">
+
+        <div
+          id="employeeDate"
+          class="date"
+        >
+        </div>
+
+        <div
+          id="employeeTime"
+          class="time"
+        >
+        </div>
+
+      </div>
+
+
+      <div
+        id="successMessage"
+        class="success-message"
+      >
+      </div>
+
+
     </div>
 
-  </div>
+
+    <!-- ERROR -->
+
+    <div
+      id="errorBox"
+      class="error-box"
+    >
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer class="footer">
+
+  AFFORDAMART EMPLOYEE ATTENDANCE SYSTEM
+
+</footer>
 
 
 <script>
 
-  /******************************************************
-   * AFFORDAMART QR SCANNER
-   ******************************************************/
+/******************************************************
+ * CONFIG
+ ******************************************************/
 
-  const APPS_SCRIPT_URL =
-    'https://script.google.com/macros/s/AKfycbwqrwaIkC2J1wa29IfnX3ZrQFoot62igkSgf2jGsx8cyFxLJHDeUpBIK2xg90487w/exec';
-
-
-  let html5QrCode = null;
-  let scanning = false;
-  let processing = false;
+const API_URL =
+  'https://script.google.com/macros/s/AKfycbwqrwaIkC2J1wa29IfnX3ZrQFoot62igkSgf2jGsx8cyFxLJHDeUpBIK2xg90487w/exec';
 
 
-  /******************************************************
-   * STATUS
-   ******************************************************/
+/******************************************************
+ * GLOBALS
+ ******************************************************/
 
-  function setStatus(message, type = 'loading') {
+let html5QrCode = null;
 
-    const status = document.getElementById('status');
+let scannerRunning = false;
 
-    status.textContent = message;
-
-    status.className = 'status ' + type;
-  }
+let processingScan = false;
 
 
-  /******************************************************
-   * START CAMERA
-   ******************************************************/
+/******************************************************
+ * ELEMENTS
+ ******************************************************/
 
-  async function startScanner() {
-
-    if (scanning) {
-      return;
-    }
-
-    processing = false;
-
-    setStatus('📷 Starting camera...', 'loading');
-
-    document.getElementById('restartButton').style.display = 'none';
-
-    try {
-
-      html5QrCode = new Html5Qrcode("reader");
-
-      const config = {
-        fps: 10,
-        qrbox: function(viewfinderWidth, viewfinderHeight) {
-
-          const size = Math.min(
-            viewfinderWidth,
-            viewfinderHeight
-          ) * 0.70;
-
-          return {
-            width: Math.floor(size),
-            height: Math.floor(size)
-          };
-        },
-
-        aspectRatio: 1.0
-      };
+const waiting =
+  document.getElementById(
+    'waiting'
+  );
 
 
-      /*
-       * IMPORTANT:
-       * facingMode MUST be a STRING here.
-       *
-       * This avoids:
-       * "facingMode should be string or object with exact as key"
-       */
-
-      await html5QrCode.start(
-        {
-          facingMode: "environment"
-        },
-        config,
-        onScanSuccess,
-        onScanFailure
-      );
-
-      scanning = true;
-
-      setStatus(
-        '✅ CAMERA READY — I-scan ang employee QR',
-        'success'
-      );
-
-    } catch (error) {
-
-      console.error(error);
-
-      scanning = false;
-
-      setStatus(
-        '❌ CAMERA COULD NOT START: ' +
-        (error.message || error),
-        'error'
-      );
-
-      document.getElementById('restartButton').style.display =
-        'inline-block';
-    }
-  }
+const employeeCard =
+  document.getElementById(
+    'employeeCard'
+  );
 
 
-  /******************************************************
-   * QR SCAN SUCCESS
-   ******************************************************/
-
-  async function onScanSuccess(decodedText) {
-
-    if (processing) {
-      return;
-    }
-
-    processing = true;
-
-    console.log('QR DETECTED:', decodedText);
-
-    setStatus(
-      '⏳ QR detected. Processing attendance...',
-      'loading'
-    );
-
-    try {
-
-      /*
-       * Stop camera temporarily to prevent
-       * duplicate scans.
-       */
-
-      if (html5QrCode && scanning) {
-
-        await html5QrCode.stop();
-
-        scanning = false;
-      }
-
-    } catch (error) {
-
-      console.log(
-        'Camera stop warning:',
-        error
-      );
-    }
+const employeePhoto =
+  document.getElementById(
+    'employeePhoto'
+  );
 
 
-    const employeeId = extractEmployeeId(decodedText);
+const employeeName =
+  document.getElementById(
+    'employeeName'
+  );
 
 
-    if (!employeeId) {
+const employeeId =
+  document.getElementById(
+    'employeeId'
+  );
 
-      setStatus(
-        '❌ Invalid QR code. Employee ID not found.',
-        'error'
-      );
 
-      processing = false;
+const employeeAction =
+  document.getElementById(
+    'employeeAction'
+  );
 
-      document.getElementById('restartButton').style.display =
-        'inline-block';
+
+const employeeDate =
+  document.getElementById(
+    'employeeDate'
+  );
+
+
+const employeeTime =
+  document.getElementById(
+    'employeeTime'
+  );
+
+
+const successMessage =
+  document.getElementById(
+    'successMessage'
+  );
+
+
+const cameraStatus =
+  document.getElementById(
+    'cameraStatus'
+  );
+
+
+const errorBox =
+  document.getElementById(
+    'errorBox'
+  );
+
+
+/******************************************************
+ * BEEP
+ ******************************************************/
+
+function beep() {
+
+  try {
+
+    const AudioContext =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+
+    if (!AudioContext) {
 
       return;
+
     }
 
 
-    sendAttendance(employeeId);
-  }
+    const audioContext =
+      new AudioContext();
 
 
-  /******************************************************
-   * QR SCAN FAILURE
-   ******************************************************/
-
-  function onScanFailure(errorMessage) {
-
-    /*
-     * Normal scanning produces many temporary
-     * "not found" messages. Do not display them.
-     */
-
-  }
+    const oscillator =
+      audioContext.createOscillator();
 
 
-  /******************************************************
-   * EXTRACT EMPLOYEE ID
-   ******************************************************/
-
-  function extractEmployeeId(qrText) {
-
-    if (!qrText) {
-      return '';
-    }
-
-    qrText = String(qrText).trim();
+    const gain =
+      audioContext.createGain();
 
 
-    /*
-     * CASE 1:
-     * QR contains plain Employee ID
-     */
-
-    if (
-      !qrText.startsWith('http://') &&
-      !qrText.startsWith('https://')
-    ) {
-
-      return cleanEmployeeId(qrText);
-    }
+    oscillator.type =
+      'sine';
 
 
-    /*
-     * CASE 2:
-     * QR contains URL with ?id=EMPLOYEEID
-     */
-
-    try {
-
-      const url = new URL(qrText);
-
-      const id =
-        url.searchParams.get('id') ||
-        url.searchParams.get('employeeId') ||
-        url.searchParams.get('employee');
-
-      if (id) {
-
-        return cleanEmployeeId(id);
-      }
-
-    } catch (error) {
-
-      console.log(
-        'URL parsing failed:',
-        error
-      );
-    }
+    oscillator.frequency.value =
+      1000;
 
 
-    /*
-     * CASE 3:
-     * Try extracting ID from URL manually.
-     */
-
-    const match =
-      qrText.match(
-        /(?:id|employeeId|employee)=([^&]+)/i
-      );
-
-    if (match && match[1]) {
-
-      return cleanEmployeeId(
-        decodeURIComponent(match[1])
-      );
-    }
-
-
-    /*
-     * CASE 4:
-     * Last fallback:
-     * use entire QR content.
-     */
-
-    return cleanEmployeeId(qrText);
-  }
-
-
-  /******************************************************
-   * CLEAN EMPLOYEE ID
-   ******************************************************/
-
-  function cleanEmployeeId(value) {
-
-    return String(value || '')
-      .trim()
-      .replace(/\s+/g, ' ');
-  }
-
-
-  /******************************************************
-   * SEND ATTENDANCE TO APPS SCRIPT
-   ******************************************************/
-
-  function sendAttendance(employeeId) {
-
-    setStatus(
-      '⏳ Recording attendance for ' +
-      employeeId +
-      '...',
-      'loading'
+    gain.gain.setValueAtTime(
+      0.0001,
+      audioContext.currentTime
     );
 
 
-    /*
-     * JSONP is used because this GitHub Pages site
-     * is separate from Google Apps Script.
-     */
-
-    const callbackName =
-      'affordaMartCallback_' +
-      Date.now();
+    gain.gain.exponentialRampToValueAtTime(
+      0.25,
+      audioContext.currentTime + 0.01
+    );
 
 
-    const script =
-      document.createElement('script');
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      audioContext.currentTime + 0.18
+    );
 
 
-    let completed = false;
+    oscillator.connect(
+      gain
+    );
 
 
-    window[callbackName] = function(response) {
-
-      completed = true;
-
-      try {
-
-        handleAttendanceResponse(response);
-
-      } finally {
-
-        delete window[callbackName];
-
-        if (script.parentNode) {
-          script.parentNode.removeChild(script);
-        }
-      }
-    };
+    gain.connect(
+      audioContext.destination
+    );
 
 
-    script.onerror = function() {
-
-      if (completed) {
-        return;
-      }
-
-      completed = true;
-
-      delete window[callbackName];
-
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
+    oscillator.start();
 
 
-      setStatus(
-        '❌ Could not connect to attendance server.',
-        'error'
-      );
-
-      processing = false;
-
-      document.getElementById('restartButton').style.display =
-        'inline-block';
-    };
+    oscillator.stop(
+      audioContext.currentTime + 0.2
+    );
 
 
-    script.src =
-      APPS_SCRIPT_URL +
-      '?scan=QR' +
-      '&id=' +
-      encodeURIComponent(employeeId) +
-      '&callback=' +
-      encodeURIComponent(callbackName) +
-      '&t=' +
-      Date.now();
-
-
-    document.body.appendChild(script);
-  }
-
-
-  /******************************************************
-   * HANDLE APPS SCRIPT RESPONSE
-   ******************************************************/
-
-  function handleAttendanceResponse(response) {
+  } catch (error) {
 
     console.log(
-      'Attendance response:',
-      response
+      'Beep error:',
+      error
     );
 
-
-    if (!response || !response.success) {
-
-      setStatus(
-        '❌ ' +
-        (
-          response &&
-          response.message
-            ? response.message
-            : 'Attendance failed.'
-        ),
-        'error'
-      );
-
-      processing = false;
-
-      document.getElementById('restartButton').style.display =
-        'inline-block';
-
-      return;
-    }
-
-
-    /*
-     * SUCCESS
-     */
-
-    const employee =
-      response.employee || {};
-
-
-    const employeeName =
-      employee.name ||
-      response.name ||
-      'Employee';
-
-
-    const employeeId =
-      response.employeeId ||
-      employee.id ||
-      '';
-
-
-    const action =
-      response.action ||
-      'RECORDED';
-
-
-    const time =
-      response.time ||
-      new Date().toLocaleString();
-
-
-    document.getElementById('employeeName').textContent =
-      employeeName;
-
-
-    document.getElementById('employeeId').textContent =
-      'ID: ' + employeeId;
-
-
-    document.getElementById('action').textContent =
-      action;
-
-
-    document.getElementById('time').textContent =
-      time;
-
-
-    document.getElementById('employeeCard').style.display =
-      'block';
-
-
-    setStatus(
-      '✅ ATTENDANCE RECORDED SUCCESSFULLY',
-      'success'
-    );
-
-
-    document.getElementById('restartButton').style.display =
-      'inline-block';
-
-
-    /*
-     * Allow another scan after a short delay.
-     */
-
-    setTimeout(function() {
-
-      processing = false;
-
-      restartScanner();
-
-    }, 3000);
   }
 
-
-  /******************************************************
-   * RESTART SCANNER
-   ******************************************************/
-
-  async function restartScanner() {
-
-    processing = false;
-
-    document.getElementById('employeeCard').style.display =
-      'none';
-
-    document.getElementById('restartButton').style.display =
-      'none';
+}
 
 
-    /*
-     * Clear previous scanner instance.
-     */
+/******************************************************
+ * ERROR DISPLAY
+ ******************************************************/
 
-    try {
+function showError(
+  message
+) {
 
-      if (html5QrCode) {
-
-        if (scanning) {
-
-          await html5QrCode.stop();
-
-        }
-
-        await html5QrCode.clear();
-      }
-
-    } catch (error) {
-
-      console.log(
-        'Scanner cleanup:',
-        error
-      );
-    }
+  errorBox.textContent =
+    message;
 
 
-    html5QrCode = null;
-    scanning = false;
+  errorBox.style.display =
+    'block';
 
 
-    /*
-     * Start fresh.
-     */
-
-    setTimeout(function() {
-
-      startScanner();
-
-    }, 300);
-  }
-
-
-  /******************************************************
-   * INITIALIZE
-   ******************************************************/
-
-  window.addEventListener(
-    'load',
+  setTimeout(
     function() {
 
-      startScanner();
+      errorBox.style.display =
+        'none';
 
+    },
+    4000
+  );
+
+}
+
+
+/******************************************************
+ * FORMAT DATE
+ ******************************************************/
+
+function formatDate(
+  value
+) {
+
+  const date =
+    value
+      ? new Date(value)
+      : new Date();
+
+
+  if (
+    isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return new Date()
+      .toLocaleDateString(
+        'en-PH',
+        {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }
+      );
+
+  }
+
+
+  return date.toLocaleDateString(
+    'en-PH',
+    {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     }
   );
 
+}
+
+
+/******************************************************
+ * FORMAT TIME
+ ******************************************************/
+
+function formatTime(
+  value
+) {
+
+  /*
+   * The backend returns HH:mm:ss.
+   * Display it directly so timezone conversion
+   * will not accidentally change the attendance time.
+   */
+
+  if (
+    value &&
+    /^\d{2}:\d{2}:\d{2}$/.test(
+      String(value)
+    )
+  ) {
+
+    return value;
+
+  }
+
+
+  return new Date()
+    .toLocaleTimeString(
+      'en-PH',
+      {
+        hour:
+          '2-digit',
+
+        minute:
+          '2-digit',
+
+        second:
+          '2-digit',
+
+        hour12:
+          true
+      }
+    );
+
+}
+
+
+/******************************************************
+ * SHOW EMPLOYEE
+ ******************************************************/
+
+function showEmployee(
+  data
+) {
+
+  waiting.style.display =
+    'none';
+
+
+  employeeCard.style.display =
+    'flex';
+
+
+  /*
+   * NAME
+   */
+
+  employeeName.textContent =
+    data.employeeName ||
+    'EMPLOYEE';
+
+
+  /*
+   * ID
+   */
+
+  employeeId.textContent =
+    'EMPLOYEE ID: ' +
+    (
+      data.employeeId ||
+      ''
+    );
+
+
+  /*
+   * ACTION
+   */
+
+  const action =
+    String(
+      data.action ||
+      ''
+    ).toUpperCase();
+
+
+  employeeAction.textContent =
+    action;
+
+
+  employeeAction.classList.remove(
+    'time-in',
+    'time-out'
+  );
+
+
+  if (
+    action === 'TIME OUT'
+  ) {
+
+    employeeAction.classList.add(
+      'time-out'
+    );
+
+  } else {
+
+    employeeAction.classList.add(
+      'time-in'
+    );
+
+  }
+
+
+  /*
+   * DATE
+   */
+
+  employeeDate.textContent =
+    formatDate();
+
+
+  /*
+   * TIME
+   */
+
+  employeeTime.textContent =
+    formatTime(
+      data.time
+    );
+
+
+  /*
+   * MESSAGE
+   */
+
+  successMessage.textContent =
+    data.message ||
+    'Attendance recorded successfully.';
+
+
+  /*
+   * PHOTO
+   */
+
+  if (
+    data.employeePhotoUrl
+  ) {
+
+    employeePhoto.src =
+      data.employeePhotoUrl;
+
+
+    employeePhoto.style.display =
+      'block';
+
+
+    employeePhoto.onerror =
+      function() {
+
+        this.style.display =
+          'none';
+
+      };
+
+  } else {
+
+    employeePhoto.removeAttribute(
+      'src'
+    );
+
+
+    employeePhoto.style.display =
+      'none';
+
+  }
+
+}
+
+
+/******************************************************
+ * API REQUEST
+ ******************************************************/
+
+async function sendScan(
+  employeeIdValue
+) {
+
+  const url =
+
+    API_URL +
+
+    '?scan=QR&id=' +
+
+    encodeURIComponent(
+      employeeIdValue
+    ) +
+
+    '&_=' +
+
+    Date.now();
+
+
+  try {
+
+    const response =
+      await fetch(
+        url,
+        {
+          method:
+            'GET',
+
+          cache:
+            'no-store'
+        }
+      );
+
+
+    if (
+      !response.ok
+    ) {
+
+      throw new Error(
+        'Server returned HTTP ' +
+        response.status
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      data.success
+    ) {
+
+      /*
+       * SUCCESS BEEP
+       */
+
+      beep();
+
+
+      /*
+       * DISPLAY EMPLOYEE
+       *
+       * IMPORTANT:
+       * No timeout.
+       *
+       * The employee stays visible
+       * until another employee scans.
+       */
+
+      showEmployee(
+        data
+      );
+
+
+      cameraStatus.textContent =
+        'READY — SCAN NEXT EMPLOYEE';
+
+
+    } else {
+
+      showError(
+        data.message ||
+        'Unable to process scan.'
+      );
+
+
+      cameraStatus.textContent =
+        'READY — SCAN NEXT EMPLOYEE';
+
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    showError(
+      'Unable to connect to attendance server.'
+    );
+
+
+    cameraStatus.textContent =
+      'READY — SCAN NEXT EMPLOYEE';
+
+  }
+
+}
+
+
+/******************************************************
+ * QR SCAN SUCCESS
+ ******************************************************/
+
+async function onScanSuccess(
+  decodedText,
+  decodedResult
+) {
+
+  /*
+   * Prevent multiple callbacks from
+   * the same QR while processing.
+   */
+
+  if (
+    processingScan
+  ) {
+
+    return;
+
+  }
+
+
+  const scannedId =
+    String(
+      decodedText || ''
+    ).trim();
+
+
+  if (!scannedId) {
+
+    return;
+
+  }
+
+
+  processingScan =
+    true;
+
+
+  cameraStatus.textContent =
+    'PROCESSING SCAN...';
+
+
+  try {
+
+    await sendScan(
+      scannedId
+    );
+
+  } finally {
+
+    /*
+     * Small cooldown prevents the same
+     * QR from being recorded repeatedly
+     * while it remains in front of camera.
+     */
+
+    setTimeout(
+      function() {
+
+        processingScan =
+          false;
+
+
+        cameraStatus.textContent =
+          'READY — SCAN NEXT EMPLOYEE';
+
+      },
+      1800
+    );
+
+  }
+
+}
+
+
+/******************************************************
+ * QR SCAN FAILURE
+ ******************************************************/
+
+function onScanFailure(
+  errorMessage
+) {
+
+  /*
+   * Ignore normal camera scanning misses.
+   *
+   * html5-qrcode calls this continuously
+   * when no QR is detected.
+   */
+
+}
+
+
+/******************************************************
+ * START CAMERA
+ ******************************************************/
+
+async function startScanner() {
+
+  cameraStatus.textContent =
+    'Starting camera...';
+
+
+  html5QrCode =
+    new Html5Qrcode(
+      'reader'
+    );
+
+
+  const config = {
+
+    fps:
+      10,
+
+    qrbox:
+      function(
+        viewfinderWidth,
+        viewfinderHeight
+      ) {
+
+        const minDimension =
+          Math.min(
+            viewfinderWidth,
+            viewfinderHeight
+          );
+
+
+        const boxSize =
+          Math.floor(
+            minDimension * 0.72
+          );
+
+
+        return {
+
+          width:
+            boxSize,
+
+          height:
+            boxSize
+
+        };
+
+      },
+
+    aspectRatio:
+      1.0,
+
+    rememberLastUsedCamera:
+      true
+
+  };
+
+
+  try {
+
+    await html5QrCode.start(
+
+      {
+        facingMode:
+          'environment'
+      },
+
+      config,
+
+      onScanSuccess,
+
+      onScanFailure
+
+    );
+
+
+    scannerRunning =
+      true;
+
+
+    cameraStatus.textContent =
+      'READY — SCAN NEXT EMPLOYEE';
+
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    cameraStatus.textContent =
+      'CAMERA ERROR — PLEASE ALLOW CAMERA ACCESS';
+
+
+    showError(
+      'Please allow camera access and reload this page.'
+    );
+
+  }
+
+}
+
+
+/******************************************************
+ * KEEP CAMERA RUNNING
+ ******************************************************/
+
+window.addEventListener(
+  'visibilitychange',
+  async function() {
+
+    /*
+     * Do not automatically clear
+     * the employee display.
+     *
+     * If browser temporarily suspends
+     * the camera, restart it when page
+     * becomes visible again.
+     */
+
+    if (
+      document.visibilityState ===
+      'visible' &&
+      !scannerRunning
+    ) {
+
+      try {
+
+        await startScanner();
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+      }
+
+    }
+
+  }
+);
+
+
+/******************************************************
+ * INITIALIZE
+ ******************************************************/
+
+window.addEventListener(
+  'load',
+  function() {
+
+    startScanner();
+
+  }
+);
+
 </script>
 
+
 </body>
+
 </html>
