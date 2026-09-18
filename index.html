@@ -1,1145 +1,765 @@
-```html
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-
   <meta charset="UTF-8">
-
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>AffordaMart QR Scanner</title>
 
-  <!-- QR SCANNER LIBRARY -->
-  <script
-    src="https://unpkg.com/html5-qrcode"
-    type="text/javascript">
-  </script>
-
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
 
-
     body {
       margin: 0;
-      padding: 0;
-
-      font-family: Arial, sans-serif;
-
-      background: #f5f5f5;
-
-      color: #111;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #ffffff;
+      color: #222;
+      text-align: center;
     }
-
-
-    /* =========================================
-       HEADER
-       ========================================= */
 
     .header {
-
       background: #D71920;
-
-      color: white;
-
-      padding: 18px 15px;
-
-      text-align: center;
-
-      box-shadow:
-        0 3px 10px rgba(0,0,0,0.15);
+      color: #ffffff;
+      padding: 18px 15px 14px;
+      border-bottom: 7px solid #FFD400;
     }
 
-
-    .brand {
-
-      font-size: 28px;
-
+    .logo-text {
+      font-size: 30px;
       font-weight: 900;
-
       letter-spacing: 1px;
     }
 
-
     .subtitle {
-
-      margin-top: 5px;
-
       font-size: 14px;
-
       font-weight: bold;
-
-      color: #FFD400;
+      margin-top: 4px;
     }
-
-
-    /* =========================================
-       CONTAINER
-       ========================================= */
 
     .container {
-
-      width: 100%;
-
       max-width: 650px;
-
       margin: auto;
-
-      padding: 18px;
+      padding: 18px 15px 30px;
     }
 
-
-    /* =========================================
-       SCANNER CARD
-       ========================================= */
-
-    .scanner-card {
-
-      background: white;
-
-      border-radius: 18px;
-
-      padding: 18px;
-
-      box-shadow:
-        0 5px 20px rgba(0,0,0,0.12);
-    }
-
-
-    .scan-title {
-
-      text-align: center;
-
+    .scanner-title {
+      font-size: 24px;
+      font-weight: 800;
       color: #D71920;
-
-      font-size: 23px;
-
-      font-weight: 900;
-
-      margin-bottom: 15px;
+      margin: 8px 0 15px;
     }
-
-
-    /* =========================================
-       CAMERA
-       ========================================= */
 
     #reader {
-
       width: 100%;
-
+      max-width: 520px;
+      margin: auto;
+      border: 5px solid #D71920;
+      border-radius: 18px;
       overflow: hidden;
-
-      border-radius: 15px;
-
       background: #000;
     }
 
-
-    #reader video {
-
-      border-radius: 15px;
-    }
-
-
-    /* =========================================
-       STATUS
-       ========================================= */
-
     .status {
-
-      margin-top: 15px;
-
-      padding: 15px;
-
+      margin: 18px auto 10px;
+      padding: 14px;
       border-radius: 12px;
-
-      background: #FFF7CC;
-
-      color: #111;
-
-      font-weight: bold;
-
-      text-align: center;
-
-      line-height: 1.5;
-
-      min-height: 55px;
-    }
-
-
-    /* =========================================
-       LOADING
-       ========================================= */
-
-    .loading {
-
-      display: none;
-
-      margin-top: 12px;
-
-      text-align: center;
-
-      font-weight: bold;
-
-      color: #D71920;
-    }
-
-
-    /* =========================================
-       SUCCESS RESULT
-       ========================================= */
-
-    .result {
-
-      display: none;
-
-      margin-top: 15px;
-
-      padding: 20px;
-
-      border-radius: 15px;
-
-      text-align: center;
-
-      background: #D71920;
-
-      color: white;
-    }
-
-
-    .employee-name {
-
-      font-size: 25px;
-
-      font-weight: 900;
-
-      margin-bottom: 10px;
-    }
-
-
-    .action {
-
-      display: inline-block;
-
-      background: #FFD400;
-
-      color: #D71920;
-
-      padding: 10px 22px;
-
-      border-radius: 30px;
-
-      font-size: 22px;
-
-      font-weight: 900;
-    }
-
-
-    .time {
-
-      margin-top: 10px;
-
       font-size: 16px;
+      font-weight: bold;
+      background: #fff7cc;
+      border: 2px solid #FFD400;
     }
 
-
-    /* =========================================
-       ERROR
-       ========================================= */
+    .success {
+      background: #e9f9e9;
+      border-color: #28a745;
+      color: #176b2c;
+    }
 
     .error {
+      background: #ffeaea;
+      border-color: #D71920;
+      color: #a40000;
+    }
 
+    .loading {
+      background: #fff7cc;
+      border-color: #FFD400;
+      color: #7a6200;
+    }
+
+    .employee-card {
       display: none;
-
-      margin-top: 15px;
-
-      padding: 15px;
-
-      border-radius: 12px;
-
-      background: #ffe0e0;
-
-      color: #b00000;
-
-      font-weight: bold;
-
-      text-align: center;
+      margin: 15px auto;
+      padding: 20px;
+      border-radius: 15px;
+      background: #ffffff;
+      border: 3px solid #D71920;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     }
 
-
-    /* =========================================
-       BUTTON
-       ========================================= */
-
-    button {
-
-      width: 100%;
-
-      margin-top: 15px;
-
-      padding: 16px;
-
-      border: none;
-
-      border-radius: 12px;
-
-      background: #D71920;
-
-      color: white;
-
-      font-size: 18px;
-
+    .employee-name {
+      font-size: 26px;
       font-weight: 900;
-
-      cursor: pointer;
+      color: #D71920;
+      margin-bottom: 8px;
     }
 
-
-    button:active {
-
-      transform: scale(0.98);
+    .employee-id {
+      font-size: 17px;
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 12px;
     }
 
+    .action {
+      display: inline-block;
+      padding: 10px 22px;
+      border-radius: 25px;
+      background: #FFD400;
+      color: #222;
+      font-size: 22px;
+      font-weight: 900;
+    }
 
-    /* =========================================
-       FOOTER
-       ========================================= */
+    .time {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #555;
+    }
 
     .footer {
-
-      text-align: center;
-
-      margin-top: 18px;
-
+      margin-top: 20px;
       font-size: 12px;
-
       color: #777;
     }
 
+    button {
+      border: none;
+      background: #D71920;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 25px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    button:hover {
+      background: #b9141a;
+    }
   </style>
-
 </head>
-
 
 <body>
 
-
-  <!-- =========================================
-       HEADER
-       ========================================= -->
-
   <div class="header">
-
-    <div class="brand">
-      AFFORDAMART
-    </div>
-
-    <div class="subtitle">
-      EMPLOYEE ATTENDANCE SYSTEM
-    </div>
-
+    <div class="logo-text">AFFORDAMART</div>
+    <div class="subtitle">EMPLOYEE ATTENDANCE SYSTEM</div>
   </div>
-
-
-  <!-- =========================================
-       MAIN
-       ========================================= -->
 
   <div class="container">
 
-    <div class="scanner-card">
+    <div class="scanner-title">
+      📷 SCAN EMPLOYEE QR
+    </div>
 
+    <div id="reader"></div>
 
-      <div class="scan-title">
+    <div id="status" class="status loading">
+      Starting camera...
+    </div>
 
-        📷 SCAN EMPLOYEE QR
+    <div id="employeeCard" class="employee-card">
 
+      <div id="employeeName" class="employee-name">
+        Employee
       </div>
 
-
-      <!-- CAMERA -->
-
-      <div id="reader"></div>
-
-
-      <!-- STATUS -->
-
-      <div
-        id="status"
-        class="status">
-
-        📷 Starting camera...
-
+      <div id="employeeId" class="employee-id">
+        Employee ID
       </div>
 
-
-      <!-- LOADING -->
-
-      <div
-        id="loading"
-        class="loading">
-
-        ⏳ PROCESSING ATTENDANCE...
-
+      <div id="action" class="action">
+        —
       </div>
 
-
-      <!-- SUCCESS -->
-
-      <div
-        id="result"
-        class="result">
-
-        <div
-          id="employeeName"
-          class="employee-name">
-        </div>
-
-
-        <div
-          id="action"
-          class="action">
-        </div>
-
-
-        <div
-          id="time"
-          class="time">
-        </div>
-
+      <div id="time" class="time">
+        —
       </div>
-
-
-      <!-- ERROR -->
-
-      <div
-        id="error"
-        class="error">
-      </div>
-
-
-      <!-- SCAN AGAIN -->
-
-      <button
-        id="restartButton"
-        onclick="restartScanner()">
-
-        📷 SCAN ANOTHER EMPLOYEE
-
-      </button>
-
 
     </div>
 
+    <button id="restartButton" onclick="restartScanner()" style="display:none;">
+      🔄 SCAN AGAIN
+    </button>
 
     <div class="footer">
-
-      AFFORDAMART • Affordable. Quality. Everyday.
-
+      AffordaMart Employee QR Attendance System
     </div>
 
   </div>
-
 
 
 <script>
 
+  /******************************************************
+   * AFFORDAMART QR SCANNER
+   ******************************************************/
 
-/******************************************************
- * AFFORDAMART APPS SCRIPT WEB APP URL
- *
- * PALITAN ITO PAG MAY WEB APP URL KA NA.
- ******************************************************/
-
-const APPS_SCRIPT_URL =
-  'https://script.google.com/macros/s/AKfycbwqrwaIkC2J1wa29IfnX3ZrQFoot62igkSgf2jGsx8cyFxLJHDeUpBIK2xg90487w/exec';
+  const APPS_SCRIPT_URL =
+    'https://script.google.com/macros/s/AKfycbwqrwaIkC2J1wa29IfnX3ZrQFoot62igkSgf2jGsx8cyFxLJHDeUpBIK2xg90487w/exec';
 
 
-
-/******************************************************
- * VARIABLES
- ******************************************************/
-
-let qrScanner = null;
-
-let scannerRunning = false;
-
-let processingScan = false;
-
-let lastScannedCode = '';
-
-let lastScanTime = 0;
+  let html5QrCode = null;
+  let scanning = false;
+  let processing = false;
 
 
+  /******************************************************
+   * STATUS
+   ******************************************************/
 
-/******************************************************
- * START SCANNER
- ******************************************************/
+  function setStatus(message, type = 'loading') {
 
-function startScanner() {
+    const status = document.getElementById('status');
 
-  const status =
-    document.getElementById('status');
+    status.textContent = message;
 
-
-  status.textContent =
-    '📷 STARTING CAMERA...';
-
-
-  qrScanner =
-    new Html5Qrcode('reader');
+    status.className = 'status ' + type;
+  }
 
 
-  const config = {
+  /******************************************************
+   * START CAMERA
+   ******************************************************/
 
-    fps: 10,
+  async function startScanner() {
 
+    if (scanning) {
+      return;
+    }
 
-    qrbox: function(
-      viewfinderWidth,
-      viewfinderHeight
-    ) {
+    processing = false;
 
-      const minSize =
-        Math.min(
-          viewfinderWidth,
-          viewfinderHeight
-        );
+    setStatus('📷 Starting camera...', 'loading');
 
+    document.getElementById('restartButton').style.display = 'none';
 
-      const size =
-        Math.floor(
-          minSize * 0.70
-        );
+    try {
 
+      html5QrCode = new Html5Qrcode("reader");
 
-      return {
+      const config = {
+        fps: 10,
+        qrbox: function(viewfinderWidth, viewfinderHeight) {
 
-        width: size,
+          const size = Math.min(
+            viewfinderWidth,
+            viewfinderHeight
+          ) * 0.70;
 
-        height: size
+          return {
+            width: Math.floor(size),
+            height: Math.floor(size)
+          };
+        },
 
+        aspectRatio: 1.0
       };
 
-    },
+
+      /*
+       * IMPORTANT:
+       * facingMode MUST be a STRING here.
+       *
+       * This avoids:
+       * "facingMode should be string or object with exact as key"
+       */
+
+      await html5QrCode.start(
+        {
+          facingMode: "environment"
+        },
+        config,
+        onScanSuccess,
+        onScanFailure
+      );
+
+      scanning = true;
+
+      setStatus(
+        '✅ CAMERA READY — I-scan ang employee QR',
+        'success'
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      scanning = false;
+
+      setStatus(
+        '❌ CAMERA COULD NOT START: ' +
+        (error.message || error),
+        'error'
+      );
+
+      document.getElementById('restartButton').style.display =
+        'inline-block';
+    }
+  }
 
 
-    aspectRatio: 1.0
+  /******************************************************
+   * QR SCAN SUCCESS
+   ******************************************************/
 
-  };
+  async function onScanSuccess(decodedText) {
 
+    if (processing) {
+      return;
+    }
 
-  qrScanner
+    processing = true;
 
-    .start(
+    console.log('QR DETECTED:', decodedText);
 
-      {
-        facingMode: {
-          ideal: 'environment'
-        }
-      },
+    setStatus(
+      '⏳ QR detected. Processing attendance...',
+      'loading'
+    );
 
+    try {
 
-      config,
+      /*
+       * Stop camera temporarily to prevent
+       * duplicate scans.
+       */
 
+      if (html5QrCode && scanning) {
 
-      onScanSuccess,
+        await html5QrCode.stop();
 
+        scanning = false;
+      }
 
-      onScanFailure
+    } catch (error) {
 
-    )
-
-
-    .then(function() {
-
-      scannerRunning = true;
-
-
-      status.textContent =
-        '✅ CAMERA READY\n\n' +
-        'Point the camera at the employee QR code.';
-
-    })
-
-
-    .catch(function(error) {
-
-      console.error(
-        'SCANNER ERROR:',
+      console.log(
+        'Camera stop warning:',
         error
       );
+    }
 
 
-      scannerRunning = false;
+    const employeeId = extractEmployeeId(decodedText);
 
 
-      status.textContent =
-        '❌ CAMERA COULD NOT START\n\n' +
-        error;
+    if (!employeeId) {
 
-    });
+      setStatus(
+        '❌ Invalid QR code. Employee ID not found.',
+        'error'
+      );
 
-}
+      processing = false;
+
+      document.getElementById('restartButton').style.display =
+        'inline-block';
+
+      return;
+    }
 
 
+    sendAttendance(employeeId);
+  }
 
-/******************************************************
- * QR DETECTED
- ******************************************************/
 
-function onScanSuccess(decodedText) {
+  /******************************************************
+   * QR SCAN FAILURE
+   ******************************************************/
 
-  if (processingScan) {
+  function onScanFailure(errorMessage) {
 
-    return;
+    /*
+     * Normal scanning produces many temporary
+     * "not found" messages. Do not display them.
+     */
 
   }
 
 
-  const now =
-    Date.now();
+  /******************************************************
+   * EXTRACT EMPLOYEE ID
+   ******************************************************/
+
+  function extractEmployeeId(qrText) {
+
+    if (!qrText) {
+      return '';
+    }
+
+    qrText = String(qrText).trim();
 
 
-  /*
-   * Prevent duplicate scanning
-   * within 4 seconds.
-   */
+    /*
+     * CASE 1:
+     * QR contains plain Employee ID
+     */
 
-  if (
+    if (
+      !qrText.startsWith('http://') &&
+      !qrText.startsWith('https://')
+    ) {
 
-    decodedText === lastScannedCode &&
+      return cleanEmployeeId(qrText);
+    }
 
-    now - lastScanTime < 4000
 
-  ) {
+    /*
+     * CASE 2:
+     * QR contains URL with ?id=EMPLOYEEID
+     */
 
-    return;
+    try {
 
+      const url = new URL(qrText);
+
+      const id =
+        url.searchParams.get('id') ||
+        url.searchParams.get('employeeId') ||
+        url.searchParams.get('employee');
+
+      if (id) {
+
+        return cleanEmployeeId(id);
+      }
+
+    } catch (error) {
+
+      console.log(
+        'URL parsing failed:',
+        error
+      );
+    }
+
+
+    /*
+     * CASE 3:
+     * Try extracting ID from URL manually.
+     */
+
+    const match =
+      qrText.match(
+        /(?:id|employeeId|employee)=([^&]+)/i
+      );
+
+    if (match && match[1]) {
+
+      return cleanEmployeeId(
+        decodeURIComponent(match[1])
+      );
+    }
+
+
+    /*
+     * CASE 4:
+     * Last fallback:
+     * use entire QR content.
+     */
+
+    return cleanEmployeeId(qrText);
   }
 
 
-  lastScannedCode =
-    decodedText;
+  /******************************************************
+   * CLEAN EMPLOYEE ID
+   ******************************************************/
 
+  function cleanEmployeeId(value) {
 
-  lastScanTime =
-    now;
+    return String(value || '')
+      .trim()
+      .replace(/\s+/g, ' ');
+  }
 
 
-  processingScan =
-    true;
+  /******************************************************
+   * SEND ATTENDANCE TO APPS SCRIPT
+   ******************************************************/
 
+  function sendAttendance(employeeId) {
 
-  processEmployeeQR(
-    decodedText
-  );
-
-}
-
-
-
-/******************************************************
- * NORMAL SCAN FAILURES
- *
- * Ignore these because QR scanning checks
- * many camera frames every second.
- ******************************************************/
-
-function onScanFailure(error) {
-
-  // Intentionally ignored.
-
-}
-
-
-
-/******************************************************
- * PROCESS EMPLOYEE QR
- ******************************************************/
-
-function processEmployeeQR(employeeId) {
-
-  const status =
-    document.getElementById('status');
-
-
-  const loading =
-    document.getElementById('loading');
-
-
-  const result =
-    document.getElementById('result');
-
-
-  const errorBox =
-    document.getElementById('error');
-
-
-  result.style.display =
-    'none';
-
-
-  errorBox.style.display =
-    'none';
-
-
-  loading.style.display =
-    'block';
-
-
-  status.textContent =
-    '🔍 QR DETECTED\n\n' +
-    'Employee ID: ' +
-    employeeId;
-
-
-
-  /*
-   * Stop camera while processing.
-   */
-
-  stopScanner();
-
-
-
-  /*
-   * Create JSONP callback.
-   */
-
-  const callbackName =
-    'affordaMartCallback_' +
-    Date.now();
-
-
-
-  /*
-   * Create callback function.
-   */
-
-  window[callbackName] =
-    function(response) {
-
-      try {
-
-        handleAttendanceResponse(
-          response
-        );
-
-      }
-
-      finally {
-
-        try {
-
-          delete window[
-            callbackName
-          ];
-
-        } catch(e) {}
-
-      }
-
-    };
-
-
-
-  /*
-   * Build Apps Script URL.
-   */
-
-  const url =
-
-    APPS_SCRIPT_URL +
-
-    '?scan=QR' +
-
-    '&id=' +
-    encodeURIComponent(
-      employeeId
-    ) +
-
-    '&callback=' +
-    encodeURIComponent(
-      callbackName
-    );
-
-
-
-  /*
-   * JSONP request.
-   */
-
-  const script =
-    document.createElement(
-      'script'
-    );
-
-
-  script.src =
-    url;
-
-
-  script.onerror =
-    function() {
-
-      try {
-
-        delete window[
-          callbackName
-        ];
-
-      } catch(e) {}
-
-
-      loading.style.display =
-        'none';
-
-
-      showError(
-        'Unable to connect to AffordaMart attendance system.'
-      );
-
-
-      processingScan =
-        false;
-
-
-      setTimeout(
-        restartScanner,
-        2500
-      );
-
-    };
-
-
-  document.body.appendChild(
-    script
-  );
-
-}
-
-
-
-/******************************************************
- * HANDLE RESPONSE
- ******************************************************/
-
-function handleAttendanceResponse(
-  response
-) {
-
-  const loading =
-    document.getElementById(
+    setStatus(
+      '⏳ Recording attendance for ' +
+      employeeId +
+      '...',
       'loading'
     );
 
 
-  const status =
-    document.getElementById(
-      'status'
-    );
+    /*
+     * JSONP is used because this GitHub Pages site
+     * is separate from Google Apps Script.
+     */
+
+    const callbackName =
+      'affordaMartCallback_' +
+      Date.now();
 
 
-  loading.style.display =
-    'none';
+    const script =
+      document.createElement('script');
 
 
-
-  /*
-   * ERROR
-   */
-
-  if (
-
-    !response ||
-
-    response.success !== true
-
-  ) {
-
-    showError(
-
-      response &&
-
-      response.message
-
-        ? response.message
-
-        : 'Attendance could not be recorded.'
-
-    );
+    let completed = false;
 
 
-    processingScan =
-      false;
+    window[callbackName] = function(response) {
+
+      completed = true;
+
+      try {
+
+        handleAttendanceResponse(response);
+
+      } finally {
+
+        delete window[callbackName];
+
+        if (script.parentNode) {
+          script.parentNode.removeChild(script);
+        }
+      }
+    };
 
 
-    setTimeout(
-      restartScanner,
-      3000
-    );
+    script.onerror = function() {
+
+      if (completed) {
+        return;
+      }
+
+      completed = true;
+
+      delete window[callbackName];
+
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
 
 
-    return;
+      setStatus(
+        '❌ Could not connect to attendance server.',
+        'error'
+      );
 
+      processing = false;
+
+      document.getElementById('restartButton').style.display =
+        'inline-block';
+    };
+
+
+    script.src =
+      APPS_SCRIPT_URL +
+      '?scan=QR' +
+      '&id=' +
+      encodeURIComponent(employeeId) +
+      '&callback=' +
+      encodeURIComponent(callbackName) +
+      '&t=' +
+      Date.now();
+
+
+    document.body.appendChild(script);
   }
 
 
+  /******************************************************
+   * HANDLE APPS SCRIPT RESPONSE
+   ******************************************************/
 
-  /*
-   * SUCCESS
-   */
+  function handleAttendanceResponse(response) {
 
-  const result =
-    document.getElementById(
-      'result'
+    console.log(
+      'Attendance response:',
+      response
     );
 
 
-  const employeeName =
-    document.getElementById(
-      'employeeName'
-    );
+    if (!response || !response.success) {
+
+      setStatus(
+        '❌ ' +
+        (
+          response &&
+          response.message
+            ? response.message
+            : 'Attendance failed.'
+        ),
+        'error'
+      );
+
+      processing = false;
+
+      document.getElementById('restartButton').style.display =
+        'inline-block';
+
+      return;
+    }
 
 
-  const action =
-    document.getElementById(
-      'action'
-    );
+    /*
+     * SUCCESS
+     */
+
+    const employee =
+      response.employee || {};
 
 
-  const time =
-    document.getElementById(
-      'time'
-    );
+    const employeeName =
+      employee.name ||
+      response.name ||
+      'Employee';
 
 
-
-  employeeName.textContent =
-    response.employeeName ||
-    'EMPLOYEE';
-
-
-
-  action.textContent =
-    response.action ||
-    'RECORDED';
+    const employeeId =
+      response.employeeId ||
+      employee.id ||
+      '';
 
 
+    const action =
+      response.action ||
+      'RECORDED';
 
-  time.textContent =
-    '⏰ ' +
-    (
+
+    const time =
       response.time ||
-      ''
+      new Date().toLocaleString();
+
+
+    document.getElementById('employeeName').textContent =
+      employeeName;
+
+
+    document.getElementById('employeeId').textContent =
+      'ID: ' + employeeId;
+
+
+    document.getElementById('action').textContent =
+      action;
+
+
+    document.getElementById('time').textContent =
+      time;
+
+
+    document.getElementById('employeeCard').style.display =
+      'block';
+
+
+    setStatus(
+      '✅ ATTENDANCE RECORDED SUCCESSFULLY',
+      'success'
     );
 
 
-
-  result.style.display =
-    'block';
-
+    document.getElementById('restartButton').style.display =
+      'inline-block';
 
 
-  status.textContent =
-    '✅ ATTENDANCE RECORDED';
+    /*
+     * Allow another scan after a short delay.
+     */
 
+    setTimeout(function() {
 
+      processing = false;
 
-  processingScan =
-    false;
+      restartScanner();
 
-
-
-  /*
-   * Automatically return
-   * to scanner.
-   */
-
-  setTimeout(
-    restartScanner,
-    3500
-  );
-
-}
-
-
-
-/******************************************************
- * SHOW ERROR
- ******************************************************/
-
-function showError(message) {
-
-  const errorBox =
-    document.getElementById(
-      'error'
-    );
-
-
-  errorBox.textContent =
-    '❌ ' + message;
-
-
-  errorBox.style.display =
-    'block';
-
-}
-
-
-
-/******************************************************
- * STOP SCANNER
- ******************************************************/
-
-function stopScanner() {
-
-  if (
-
-    qrScanner &&
-
-    scannerRunning
-
-  ) {
-
-    qrScanner
-
-      .stop()
-
-      .then(function() {
-
-        scannerRunning =
-          false;
-
-      })
-
-      .catch(function(error) {
-
-        console.error(
-          'STOP SCANNER ERROR:',
-          error
-        );
-
-
-        scannerRunning =
-          false;
-
-      });
-
+    }, 3000);
   }
 
-}
+
+  /******************************************************
+   * RESTART SCANNER
+   ******************************************************/
+
+  async function restartScanner() {
+
+    processing = false;
+
+    document.getElementById('employeeCard').style.display =
+      'none';
+
+    document.getElementById('restartButton').style.display =
+      'none';
 
 
+    /*
+     * Clear previous scanner instance.
+     */
 
-/******************************************************
- * RESTART SCANNER
- ******************************************************/
+    try {
 
-function restartScanner() {
+      if (html5QrCode) {
 
-  const result =
-    document.getElementById(
-      'result'
-    );
+        if (scanning) {
 
+          await html5QrCode.stop();
 
-  const errorBox =
-    document.getElementById(
-      'error'
-    );
+        }
 
+        await html5QrCode.clear();
+      }
 
-  const loading =
-    document.getElementById(
-      'loading'
-    );
+    } catch (error) {
 
-
-  const status =
-    document.getElementById(
-      'status'
-    );
+      console.log(
+        'Scanner cleanup:',
+        error
+      );
+    }
 
 
-  result.style.display =
-    'none';
+    html5QrCode = null;
+    scanning = false;
 
 
-  errorBox.style.display =
-    'none';
+    /*
+     * Start fresh.
+     */
+
+    setTimeout(function() {
+
+      startScanner();
+
+    }, 300);
+  }
 
 
-  loading.style.display =
-    'none';
+  /******************************************************
+   * INITIALIZE
+   ******************************************************/
 
-
-  status.textContent =
-    '📷 STARTING CAMERA...';
-
-
-  processingScan =
-    false;
-
-
-  lastScannedCode =
-    '';
-
-
-  /*
-   * Give the camera time to release.
-   */
-
-  setTimeout(
+  window.addEventListener(
+    'load',
     function() {
 
       startScanner();
 
-    },
-    500
-  );
-
-}
-
-
-
-/******************************************************
- * INITIALIZE
- ******************************************************/
-
-window.addEventListener(
-  'load',
-  function() {
-
-    if (
-      !window.isSecureContext
-    ) {
-
-      document.getElementById(
-        'status'
-      ).textContent =
-        '❌ CAMERA REQUIRES HTTPS';
-
-      return;
-
     }
-
-
-    startScanner();
-
-  }
-);
+  );
 
 </script>
 
 </body>
-
 </html>
-```
